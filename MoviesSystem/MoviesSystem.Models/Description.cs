@@ -6,6 +6,11 @@ namespace MoviesSystem.Models
 {
     public class Description
     {
+        public Description()
+        {
+            this.Actors = new HashSet<Actor>();
+        }
+
         [ForeignKey("Movie")]
         public int Id { get; set; }
 

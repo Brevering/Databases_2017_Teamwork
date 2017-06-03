@@ -5,6 +5,11 @@ namespace MoviesSystem.Models
 {
     public class Movie
     {
+        public Movie()
+        {
+            this.Genres = new HashSet<Genre>();
+        }
+
         public int Id { get; set; }
 
         [MaxLength(50)]

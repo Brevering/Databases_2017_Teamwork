@@ -5,6 +5,11 @@ namespace MoviesSystem.Models
 {
     public class Actor
     {
+        public Actor()
+        {
+            this.Descriptions = new HashSet<Description>();
+        }
+
         public int Id { get; set; }
 
         [MaxLength(30)]
