@@ -8,19 +8,13 @@ namespace MoviesSystem.Models
     {
         public Description()
         {
-            this.Actors = new HashSet<Actor>();
         }
-
-        [ForeignKey("Movie")]
+        
         public int Id { get; set; }
 
         [Column(TypeName = "text")]
         public string Summary { get; set; }
 
         public DateTime Year { get; set; }
-
-        public virtual Movie Movie { get; set; }
-
-        public virtual ICollection<Actor> Actors{ get; set; }
     }
 }

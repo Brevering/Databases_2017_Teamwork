@@ -1,7 +1,12 @@
 ﻿using MoviesSystem.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MoviesSystem
+namespace WpfMovieSystem
 {
     public class MoviesSystemDbContext : DbContext
     {
@@ -14,7 +19,5 @@ namespace MoviesSystem
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<Description> Description { get; set; }
-
-        public DbSet<Actor> Actors { get; set; }
     }
 }

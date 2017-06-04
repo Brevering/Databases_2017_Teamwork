@@ -8,6 +8,7 @@ namespace MoviesSystem.Models
         public Movie()
         {
             this.Genres = new HashSet<Genre>();
+            this.Actors = new HashSet<Actor>();
         }
 
         public int Id { get; set; }
@@ -17,6 +18,8 @@ namespace MoviesSystem.Models
         public string Title { get; set; }
 
         public virtual ICollection<Genre> Genres { get; set; }
+
+        public virtual ICollection<Actor> Actors { get; set; }
 
         public virtual Description Description { get; set; }
 

@@ -7,7 +7,7 @@ namespace MoviesSystem.Models
     {
         public Actor()
         {
-            this.Descriptions = new HashSet<Description>();
+            this.Movies = new HashSet<Movie>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace MoviesSystem.Models
         [Required]
         public string LastName { get; set; }
 
-        public virtual ICollection<Description> Descriptions { get; set; }
+        public virtual ICollection<Movie> Movies { get; set; }
     }
 }

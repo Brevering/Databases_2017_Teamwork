@@ -1,0 +1,35 @@
+﻿<Window x:Class="WpfMovieSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMovieSystem"
+        xmlns:View="clr-namespace:WpfMovieSystem.Views"
+        xmlns:ViewModel="clr-namespace:WpfMovieSystem.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type ViewModel:MoviesViewModel}">
+            <View:MoviesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:ActorsViewModel}">
+            <View:ActorsView/>
+        </DataTemplate>        
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Movies"/>
+                </TabItem.Header>
+                <View:MoviesView/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="Actors"/>
+                </TabItem.Header>
+                <View:ActorsView/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
