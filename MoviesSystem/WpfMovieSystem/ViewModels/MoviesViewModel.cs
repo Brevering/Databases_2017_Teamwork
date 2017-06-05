@@ -34,7 +34,7 @@ namespace WpfMovieSystem.ViewModels
                 newMovie.Genres = new List<Genre>();
                 newMovie.Rate = new Rate()
                 {
-                    RateValue = i,
+                    RateValue = i+1,
                     Id = i
                 };
                 MoviesCollection.Add(newMovie);
@@ -113,7 +113,14 @@ namespace WpfMovieSystem.ViewModels
                     var dbMovies = context.Movies.ToList();
                     foreach (Movie movie in dbMovies)
                     {
-                        movies.Add(movie);
+                        Movie newMovie = new Movie();
+                        newMovie.Title = movie.Title;
+                        newMovie.Rate = movie.Rate;
+                        newMovie.Id = movie.Id;
+                        newMovie.Genres = movie.Genres;
+                        newMovie.Description = movie.Description;
+                        newMovie.Actors = movie.Actors;
+                        movies.Add(newMovie);
                     }
                 }
 
@@ -136,7 +143,31 @@ namespace WpfMovieSystem.ViewModels
 
         public void HandleSaveToDbCommand(object parameter)
         {
-            ///TODO: Save movies in DB
+            using (MoviesSystemDbContext context = new MoviesSystemDbContext())
+            {
+                var dbMovies = context.Movies;
+                foreach (Movie movie in MoviesCollection)
+                {
+                    Movie dbMovie = dbMovies.Where(
+                    m => m.Title == movie.Title && m.Description.Year.Year == movie.Description.Year.Year)
+                    .FirstOrDefault();
+                    if (dbMovie == null)
+                    {
+                        dbMovies.Add(movie);
+                    }
+                    else
+                    {
+                        dbMovie.Actors = movie.Actors;
+                        dbMovie.Description = movie.Description;
+                        dbMovie.Genres = movie.Genres;
+                        dbMovie.Rate = dbMovie.Rate;
+                    }
+                }
+
+                context.SaveChanges();
+            }
+
+
         }
     }
 }
