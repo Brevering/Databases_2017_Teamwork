@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WpfMovieSystem.Behavior;
 using System.Windows;
+using WpfMovieSystem.Helpers;
 
 namespace WpfMovieSystem.ViewModels
 {
@@ -92,14 +93,7 @@ namespace WpfMovieSystem.ViewModels
             }
             else
             {
-                MessageBoxButton buttons = MessageBoxButton.OK;
-                MessageBoxImage icon = MessageBoxImage.Error;
-                Window Owner = App.Current.MainWindow;
-                string title = "Error";
-                string err = "There were some problems loading movies from Database!";
-                if (MessageBox.Show(Owner, err, title, buttons, icon) == MessageBoxResult.OK)
-                {
-                }
+                ShowMessage.ShowError("There were some problems loading movies from Database!");
             }
         }
 
@@ -143,31 +137,43 @@ namespace WpfMovieSystem.ViewModels
 
         public void HandleSaveToDbCommand(object parameter)
         {
-            using (MoviesSystemDbContext context = new MoviesSystemDbContext())
+            StringBuilder error = new StringBuilder();
+            foreach (Movie movie in MoviesCollection)
             {
-                var dbMovies = context.Movies;
-                foreach (Movie movie in MoviesCollection)
+                try
                 {
-                    Movie dbMovie = dbMovies.Where(
-                    m => m.Title == movie.Title && m.Description.Year.Year == movie.Description.Year.Year)
-                    .FirstOrDefault();
-                    if (dbMovie == null)
+                    using (MoviesSystemDbContext context = new MoviesSystemDbContext())
                     {
-                        dbMovies.Add(movie);
-                    }
-                    else
-                    {
-                        dbMovie.Actors = movie.Actors;
-                        dbMovie.Description = movie.Description;
-                        dbMovie.Genres = movie.Genres;
-                        dbMovie.Rate = dbMovie.Rate;
+                        var dbMovies = context.Movies;
+
+                        Movie dbMovie = dbMovies.Where(
+                        m => m.Title == movie.Title && m.Description.Year.Year == movie.Description.Year.Year)
+                        .FirstOrDefault();
+                        if (dbMovie == null)
+                        {
+                            dbMovies.Add(movie);
+                        }
+                        else
+                        {
+                            dbMovie.Actors = movie.Actors;
+                            dbMovie.Description = movie.Description;
+                            dbMovie.Genres = movie.Genres;
+                            dbMovie.Rate = dbMovie.Rate;
+                        }
+
+                        context.SaveChanges();
                     }
                 }
+                catch (Exception ex)
+                {
+                    error.AppendFormat("{0} was not uploaded due to err:{1}{2}", movie.Title,ex.Message,Environment.NewLine);
+                }
 
-                context.SaveChanges();
+                if (error.Length>0)
+                {
+                    ShowMessage.ShowError(error.ToString());
+                }          
             }
-
-
         }
     }
 }
