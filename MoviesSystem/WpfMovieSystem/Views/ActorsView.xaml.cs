@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfMovieSystem.ViewModels;
 
 namespace WpfMovieSystem.Views
 {
@@ -17,13 +18,7 @@ namespace WpfMovieSystem.Views
         public ActorsView()
         {
             InitializeComponent();
-           // this.DataContext = new ActorsViewModel();
-        }
-
-        public void InsertButton_Click(object sender, RoutedEventArgs e)
-        {
-            InsertWindowView view = new InsertWindowView();
-            view.Show();
+            this.DataContext = new ActorsViewModel();
         }
     }
 }
