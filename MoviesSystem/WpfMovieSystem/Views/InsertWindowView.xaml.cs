@@ -24,17 +24,25 @@ namespace WpfMovieSystem.Views
             {
                 var firstName = FirstNameTextBox.Text;
                 var lastName = LastNameTextBox.Text;
+                var movies = MoviesTextBox.Text.Split(',');
+
                 var newActor = new Actor
                 {
                     FirstName = firstName,
-                    LastName = lastName
+                    LastName = lastName,
+                    Movies = new List<Movie>()
                 };
+                foreach (var movie in movies)
+                {
+                    newActor.Movies.Add(new Movie { Title = movie });
+                }
 
                 context.Actors.Add(newActor);
                 context.SaveChanges();
             }
             FirstNameTextBox.Text = "";
             LastNameTextBox.Text = "";
+            MoviesTextBox.Text = "";
         }
     }
 }
