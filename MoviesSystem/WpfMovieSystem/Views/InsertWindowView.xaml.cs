@@ -25,7 +25,7 @@ namespace WpfMovieSystem.Views
                 var firstName = FirstNameTextBox.Text;
                 var lastName = LastNameTextBox.Text;
                 var movies = MoviesTextBox.Text.Split(',');
-
+                
                 var newActor = new Actor
                 {
                     FirstName = firstName,
@@ -34,7 +34,7 @@ namespace WpfMovieSystem.Views
                 };
                 foreach (var movie in movies)
                 {
-                    newActor.Movies.Add(new Movie { Title = movie });
+                    newActor.Movies.Add(LoadOrCreateMovie(context, movie));
                 }
 
                 context.Actors.Add(newActor);
@@ -43,6 +43,22 @@ namespace WpfMovieSystem.Views
             FirstNameTextBox.Text = "";
             LastNameTextBox.Text = "";
             MoviesTextBox.Text = "";
+        }
+
+        private static Movie LoadOrCreateMovie(MoviesSystemDbContext context, string movieTitle)
+        {
+            var movie = context.Movies
+                            .FirstOrDefault(m => m.Title.ToLower() == movieTitle.ToLower());
+
+            if (movie == null)
+            {
+                movie = new Movie
+                {
+                    Title = movieTitle
+                };
+            }
+
+            return movie;
         }
     }
 }
