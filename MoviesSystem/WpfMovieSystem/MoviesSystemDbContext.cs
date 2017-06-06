@@ -19,5 +19,13 @@ namespace WpfMovieSystem
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<Description> Description { get; set; }
+
+        public DbSet<Actor> Actors { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<MoviesSystemDbContext>(null);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
