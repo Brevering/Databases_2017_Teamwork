@@ -76,6 +76,27 @@ namespace WpfMovieSystem.ViewModels
             insertActorView.Show();
         }
 
+        private ICommand openUpdateActorWindowCommand;
+        public ICommand OpenUpdateActorWindowCommand
+        {
+            get
+            {
+                if (this.openUpdateActorWindowCommand == null)
+                {
+                    this.openUpdateActorWindowCommand =
+                        new RelayCommand(this.HandleOpenUpdateActorWindowCommand);
+                }
+                return this.openUpdateActorWindowCommand;
+            }
+        }
+
+        private void HandleOpenUpdateActorWindowCommand(object parameter)
+        {
+            UpdateWindowView updateActorView = new UpdateWindowView();
+            updateActorView.DataContext = this;
+            updateActorView.Show();
+        }
+
         private ICommand addNewActorCommand;
         public ICommand AddNewActorCommand
         {
@@ -146,7 +167,7 @@ namespace WpfMovieSystem.ViewModels
             addActorWindow.Close();
         }
 
-        private static Movie LoadOrCreateMovie(MoviesSystemDbContext context, string movieTitle)
+        private Movie LoadOrCreateMovie(MoviesSystemDbContext context, string movieTitle)
         {
             var movie = context.Movies
                             .FirstOrDefault(m => m.Title.ToLower() == movieTitle.ToLower());
@@ -161,6 +182,95 @@ namespace WpfMovieSystem.ViewModels
 
             return movie;
         }
+
+        private ICommand updateActorCommand;
+        public ICommand UpdateActorCommand
+        {
+            get
+            {
+                if (this.updateActorCommand == null)
+                {
+                    this.updateActorCommand = new RelayCommand(this.HandleUpdateActorCommand);
+                }
+                return this.updateActorCommand;
+            }
+        }
+
+        private void HandleUpdateActorCommand(object parameter)
+        {
+            Window updateActorWindow = parameter as UpdateWindowView;
+            if (updateActorWindow == null)
+            {
+                return;
+            }
+
+            Grid updateActorForm = updateActorWindow.FindName("UpdateActorForm") as Grid;
+            if (updateActorForm == null)
+            {
+                return;
+            }
+
+            TextBox ActorNameTextBox =
+                updateActorForm.FindName("ActorNameTextBox") as TextBox;
+            TextBox NewValueTextBox =
+                updateActorForm.FindName("NewValueTextBox") as TextBox;
+            RadioButton NameRadioButton =
+                updateActorForm.FindName("UpdateNameButton") as RadioButton;
+            RadioButton MoviesRadioButton =
+                updateActorForm.FindName("UpdateMoviesButton") as RadioButton;
+            if (ActorNameTextBox == null || NewValueTextBox == null)
+            {
+                return;
+            }
+
+            try
+            {
+                using (MoviesSystemDbContext context = new MoviesSystemDbContext())
+                {
+                    var actorNames = ActorNameTextBox.Text.Split(' ');
+                    var firstName = actorNames[0];
+                    var lastName = actorNames[1];
+                    var newValue = NewValueTextBox.Text;
+                    string[] newNames;
+                    string[] newMovies;
+
+                    var actorToUpdate = context.Actors
+                                            .Where(
+                                                    a => a.FirstName.ToLower() == firstName.ToLower() 
+                                                    && a.LastName.ToLower() == lastName.ToLower()
+                                                  )
+                                            .FirstOrDefault();
+
+                    actorToUpdate.Movies.Clear();
+
+                    if ((bool)NameRadioButton.IsChecked)
+                    {
+                        newNames = newValue.Split(' ');
+                        actorToUpdate.FirstName = newNames[0];
+                        actorToUpdate.LastName = newNames[1];
+                    }
+
+                    else
+                    {
+                        newMovies = newValue.Split(',');
+                        foreach (var newMovie in newMovies)
+                        {
+                            actorToUpdate.Movies.Add(LoadOrCreateMovie(context, newMovie));
+                        }
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage.ShowError(ex.Message);
+                return;
+            }
+
+            updateActorWindow.Close();
+        }
+
 
         //private async Task<ObservableCollection<Actor>> InsertIntoDbCommand()
         //{

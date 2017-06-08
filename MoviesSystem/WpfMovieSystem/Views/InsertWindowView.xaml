@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:WpfMovieSystem.Views"
         mc:Ignorable="d"
         x:Name="AddActorWindow"
-        Title="Add new actor" Height="400" Width="500">
+        Title="Add new actor" Height="300" Width="450">
     <Grid x:Name="NewActorForm">
-        <TextBlock x:Name="FirstNameBlock" HorizontalAlignment="Left" Margin="46,27,0,0" TextWrapping="Wrap" Text="First name" VerticalAlignment="Top" Height="19" Width="62"/>
-        <TextBlock x:Name="LastNameBlock" HorizontalAlignment="Left" Margin="46,99,0,0" TextWrapping="Wrap" Text="Last name" VerticalAlignment="Top" Height="19" Width="62"/>
-        <TextBox x:Name="FirstNameTextBox" HorizontalAlignment="Left" Height="32" Margin="46,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
-        <TextBox x:Name="LastNameTextBox" HorizontalAlignment="Left" Height="32" Margin="46,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
-        <TextBlock x:Name="MoviesBlock" HorizontalAlignment="Left" Margin="46,172,0,0" TextWrapping="Wrap" Text="Movies" VerticalAlignment="Top"/>
-        <TextBox x:Name="MoviesTextBox" HorizontalAlignment="Left" Height="60" Margin="46,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
-        <Button x:Name="CreateButton" Content="Create" HorizontalAlignment="Left" Height="28" Margin="347,280,0,0" VerticalAlignment="Top" Width="106"
+        <TextBlock x:Name="FirstNameBlock" HorizontalAlignment="Left" Margin="46,10,0,0" TextWrapping="Wrap" Text="First name" VerticalAlignment="Top" Height="19" Width="62"/>
+        <TextBlock x:Name="LastNameBlock" HorizontalAlignment="Left" Margin="46,64,0,0" TextWrapping="Wrap" Text="Last name" VerticalAlignment="Top" Height="19" Width="62"/>
+        <TextBox x:Name="FirstNameTextBox" HorizontalAlignment="Left" Height="25" Margin="46,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
+        <TextBox x:Name="LastNameTextBox" HorizontalAlignment="Left" Height="24" Margin="46,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
+        <TextBlock x:Name="MoviesBlock" HorizontalAlignment="Left" Margin="46,117,0,0" TextWrapping="Wrap" Text="Movies" VerticalAlignment="Top"/>
+        <TextBox x:Name="MoviesTextBox" HorizontalAlignment="Left" Height="60" Margin="46,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="263"/>
+        <Button x:Name="CreateButton" Content="Submit" HorizontalAlignment="Left" Height="28" Margin="308,218,0,0" VerticalAlignment="Top" Width="106"
                 Command="{Binding AddNewActorCommand}"
                 CommandParameter="{Binding ElementName=AddActorWindow, Mode=OneWay}"/>
 

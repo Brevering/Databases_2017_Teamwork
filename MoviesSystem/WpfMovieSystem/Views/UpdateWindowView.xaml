@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfMovieSystem.Views.UpdateWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMovieSystem.Views"
+        mc:Ignorable="d"
+        x:Name="UpdateActorWindow"
+        Title="Update movies" Height="300" Width="450">
+    <Grid x:Name="UpdateActorForm">
+        <TextBlock x:Name="ActorName" HorizontalAlignment="Left" Margin="31,26,0,0" TextWrapping="Wrap" Text="Name of the actor" VerticalAlignment="Top"/>
+        <TextBox x:Name="ActorNameTextBox" HorizontalAlignment="Left" Height="25" Margin="31,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="298"/>
+        <TextBlock x:Name="ValueToUpdateName" HorizontalAlignment="Left" Margin="31,88,0,0" TextWrapping="Wrap" Text="Update" VerticalAlignment="Top"/>
+        <RadioButton x:Name="UpdateNameButton" Content="Name" HorizontalAlignment="Left" Margin="31,109,0,0" VerticalAlignment="Top" GroupName="Update" IsChecked="True"/>
+        <RadioButton x:Name="UpdateMoviesButton" Content="Movies" HorizontalAlignment="Left" Margin="117,109,0,0" VerticalAlignment="Top" GroupName="Update"/>
+        <TextBlock x:Name="NewValueName" HorizontalAlignment="Left" Margin="31,145,0,0" TextWrapping="Wrap" Text="Value" VerticalAlignment="Top"/>
+        <TextBox x:Name="NewValueTextBox" HorizontalAlignment="Left" Height="42" Margin="31,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="298"/>
+        <Button x:Name="UpdateButton" Content="Submit" HorizontalAlignment="Left" Margin="327,230,0,0" VerticalAlignment="Top" Width="75"
+                Command="{Binding UpdateActorCommand}"
+                CommandParameter="{Binding ElementName=UpdateActorWindow, Mode=OneWay}"/>
+    </Grid>
+</Window>

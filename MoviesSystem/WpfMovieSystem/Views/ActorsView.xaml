@@ -61,9 +61,9 @@
             <Button Height="30" Margin="0 0 20 0"
                 Command="{Binding OpenInsertActorWindowCommand}"
                 Content="Add new actor"/>
-            <!--<Button Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Command="{Binding SaveToDbCommand}"
-                Content="Save in Database"/>-->
+            <Button Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                Command="{Binding OpenUpdateActorWindowCommand}"
+                Content="Update data"/>
         </StackPanel>
     </Grid>
 </UserControl>

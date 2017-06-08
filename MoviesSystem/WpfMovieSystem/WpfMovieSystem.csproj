@@ -91,6 +91,9 @@
     <Compile Include="Views\MoviesView.xaml.cs">
       <DependentUpon>MoviesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateWindowView.xaml.cs">
+      <DependentUpon>UpdateWindowView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MoviesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
