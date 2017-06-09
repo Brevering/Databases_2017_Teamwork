@@ -15,6 +15,6 @@ namespace MoviesSystem.Models
         [Column(TypeName = "text")]
         public string Summary { get; set; }
 
-        public DateTime Year { get; set; }
+        public ushort Year { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MoviesSystem.Models;
+using MoviesSystem.Utils;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WpfMovieSystem.Behavior;
@@ -24,18 +25,19 @@ namespace WpfMovieSystem.ViewModels
 
         public MoviesViewModel()
         {
+            var a = MoviesSystem.Utils.ReadJSON.Read();
             for (int i = 0; i < 5; i++)
             {
                 Movie newMovie = new Movie();
-                newMovie.Title = "Title"+i;
+                newMovie.Title = a[i].title;
                 Description des = new Description();
-                des.Summary = "Summary "+i;
-                des.Year = DateTime.Now;
+                des.Summary = a[i].info.plot;
+                des.Year = a[i].year;
                 newMovie.Description = des;
                 newMovie.Genres = new List<Genre>();
                 newMovie.Rate = new Rate()
                 {
-                    RateValue = i+1,
+                    RateValue = a[i].info.rating,
                     Id = i
                 };
                 MoviesCollection.Add(newMovie);
@@ -147,7 +149,7 @@ namespace WpfMovieSystem.ViewModels
                         var dbMovies = context.Movies;
 
                         Movie dbMovie = dbMovies.Where(
-                        m => m.Title == movie.Title && m.Description.Year.Year == movie.Description.Year.Year)
+                        m => m.Title == movie.Title && m.Description.Year == movie.Description.Year)
                         .FirstOrDefault();
                         if (dbMovie == null)
                         {

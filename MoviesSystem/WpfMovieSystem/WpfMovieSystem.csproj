@@ -162,6 +162,10 @@
       <Project>{e0cf94be-f765-45d9-ab2e-88f9e623d182}</Project>
       <Name>MoviesSystem.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MoviesSystem.Utils\MoviesSystem.Utils.csproj">
+      <Project>{2717a799-8304-46ed-8bc5-8a33ac03541c}</Project>
+      <Name>MoviesSystem.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

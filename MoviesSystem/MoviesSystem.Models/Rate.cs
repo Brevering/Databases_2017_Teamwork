@@ -7,6 +7,6 @@ namespace MoviesSystem.Models
         public int Id { get; set; }
 
         [Range(1,10)]
-        public int RateValue { get; set; }
+        public float RateValue { get; set; }
     }
 }
