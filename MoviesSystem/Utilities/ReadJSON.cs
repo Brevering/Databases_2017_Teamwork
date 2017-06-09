@@ -9,7 +9,7 @@ namespace MoviesSystem {
     
     public class ReadJSON
     {
-        static void Main()
+        public static List<HelperClass> Read()
         {
             // ... The StreamReader will free resources on its own.
             string input;
@@ -19,6 +19,7 @@ namespace MoviesSystem {
             }
             var serializer = new JavaScriptSerializer();
             var deserializedResult = serializer.Deserialize<List<HelperClass>>(input);
+            return deserializedResult;
         }
     }
 }
