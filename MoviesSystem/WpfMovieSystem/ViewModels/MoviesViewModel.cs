@@ -149,7 +149,7 @@ namespace WpfMovieSystem.ViewModels
                         var dbMovies = context.Movies;
 
                         Movie dbMovie = dbMovies.Where(
-                        m => m.Title == movie.Title && m.Description.Year == movie.Description.Year)
+                        m => m.Title == movie.Title && m.Description.Year==movie.Description.Year)
                         .FirstOrDefault();
                         if (dbMovie == null)
                         {
@@ -168,13 +168,13 @@ namespace WpfMovieSystem.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    error.AppendFormat("{0} was not uploaded due to err:{1}{2}", movie.Title,ex.Message,Environment.NewLine);
-                }
+                    error.AppendFormat("{0} was not uploaded due to err:{1}{2}", movie.Title, ex.Message, Environment.NewLine);
+                }                         
+            }
 
-                if (error.Length>0)
-                {
-                    ShowMessage.ShowError(error.ToString());
-                }          
+            if (error.Length > 0)
+            {
+                ShowMessage.ShowError(error.ToString());
             }
         }
     }

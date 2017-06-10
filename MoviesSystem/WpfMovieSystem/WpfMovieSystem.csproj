@@ -68,13 +68,17 @@
     <Compile Include="Behavior\ExecuteDelegate.cs" />
     <Compile Include="Behavior\RelayCommand.cs" />
     <Compile Include="Helpers\ShowMessage.cs" />
-    <Compile Include="Migrations\201706041023548_Initial.cs" />
-    <Compile Include="Migrations\201706041023548_Initial.Designer.cs">
-      <DependentUpon>201706041023548_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201706101544196_Initial.cs" />
+    <Compile Include="Migrations\201706101544196_Initial.Designer.cs">
+      <DependentUpon>201706101544196_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706061348385_AddMovieToDbContext.cs" />
-    <Compile Include="Migrations\201706061348385_AddMovieToDbContext.Designer.cs">
-      <DependentUpon>201706061348385_AddMovieToDbContext.cs</DependentUpon>
+    <Compile Include="Migrations\201706101631306_Rate can be 0.cs" />
+    <Compile Include="Migrations\201706101631306_Rate can be 0.Designer.cs">
+      <DependentUpon>201706101631306_Rate can be 0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706101635504_Year type to be int.cs" />
+    <Compile Include="Migrations\201706101635504_Year type to be int.Designer.cs">
+      <DependentUpon>201706101635504_Year type to be int.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MoviesSystemDbContext.cs" />
@@ -137,11 +141,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201706041023548_Initial.resx">
-      <DependentUpon>201706041023548_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706101544196_Initial.resx">
+      <DependentUpon>201706101544196_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706061348385_AddMovieToDbContext.resx">
-      <DependentUpon>201706061348385_AddMovieToDbContext.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706101631306_Rate can be 0.resx">
+      <DependentUpon>201706101631306_Rate can be 0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706101635504_Year type to be int.resx">
+      <DependentUpon>201706101635504_Year type to be int.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -167,9 +174,7 @@
       <Name>MoviesSystem.Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

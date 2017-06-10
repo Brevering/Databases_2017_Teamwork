@@ -7,13 +7,13 @@ namespace WpfMovieSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddMovieToDbContext : IMigrationMetadata
+    public sealed partial class Yeartypetobeint : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddMovieToDbContext));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Yeartypetobeint));
         
         string IMigrationMetadata.Id
         {
-            get { return "201706061348385_AddMovieToDbContext"; }
+            get { return "201706101635504_Year type to be int"; }
         }
         
         string IMigrationMetadata.Source

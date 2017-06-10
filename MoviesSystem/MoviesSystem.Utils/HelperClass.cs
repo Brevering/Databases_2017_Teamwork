@@ -20,6 +20,6 @@ namespace MoviesSystem.Utils
         public string title { get; set; }
         public bool Registered { get; set; }
         public MovieInfo info { get; set; }
-        }
-
     }
+
+}
