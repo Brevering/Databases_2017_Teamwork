@@ -55,6 +55,55 @@ namespace WpfMovieSystem.ViewModels
             }
         }
 
+        private ICommand loadActorsFromDbCommand;
+        public ICommand LoadActorsFromDbCommand
+        {
+            get
+            {
+                if (this.loadActorsFromDbCommand == null)
+                {
+                    this.loadActorsFromDbCommand = new RelayCommand(this.HandleloadActorsFromDbCommand);
+                }
+                return this.loadActorsFromDbCommand;
+            }
+        }
+
+        public async void HandleloadActorsFromDbCommand(object parameter)
+        {
+            ObservableCollection<Actor> updatedActors = await GetActorsFromDb();
+            if (updatedActors != null)
+            {
+                ActorsCollection = updatedActors;
+            }
+            else
+            {
+                ShowMessage.ShowError("There were some problems loading actors from Database!");
+            }
+        }
+
+        private async Task<ObservableCollection<Actor>> GetActorsFromDb()
+        {
+            return await Task.Run(() =>
+            {
+                ObservableCollection<Actor> actors = new ObservableCollection<Actor>();
+                using (MoviesSystemDbContext context = new MoviesSystemDbContext())
+                {
+                    var dbActors = context.Actors.ToList();
+                    foreach (Actor actor in dbActors)
+                    {
+                        Actor newActor = new Actor();
+                        newActor.Id = actor.Id;
+                        newActor.FirstName = actor.FirstName;
+                        newActor.LastName = actor.LastName;
+                        newActor.Movies = actor.Movies;
+                        actors.Add(newActor);
+                    }
+                }
+
+                return actors;
+            });
+        }
+
         private ICommand openInsertActorWindowCommand;
         public ICommand OpenInsertActorWindowCommand
         {
@@ -270,29 +319,6 @@ namespace WpfMovieSystem.ViewModels
 
             updateActorWindow.Close();
         }
-
-
-        //private async Task<ObservableCollection<Actor>> InsertIntoDbCommand()
-        //{
-        //    return await Task.Run(() =>
-        //    {
-        //        ObservableCollection<Actor> actors = new ObservableCollection<Actor>();
-        //        using (MoviesSystemDbContext context = new MoviesSystemDbContext())
-        //        {
-        //            var newActor = new Actor
-        //            {
-        //                FirstName = "FN",
-        //                LastName = "LN"
-        //            };
-        //            actors.Add(newActor);
-
-        //            context.Actors.Add(newActor);
-        //            context.SaveChanges();
-        //        }
-
-        //        return actors;
-        //    });
-        //}
 
     }
 }
