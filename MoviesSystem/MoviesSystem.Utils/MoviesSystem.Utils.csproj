@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -42,8 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HelperClass.cs" />
+    <Compile Include="JSONWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadJSON.cs" />
+    <Compile Include="JSONReader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MoviesSystem.Models\MoviesSystem.Models.csproj">
+      <Project>{e0cf94be-f765-45d9-ab2e-88f9e623d182}</Project>
+      <Name>MoviesSystem.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

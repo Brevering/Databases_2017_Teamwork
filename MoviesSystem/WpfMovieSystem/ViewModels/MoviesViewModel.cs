@@ -25,7 +25,7 @@ namespace WpfMovieSystem.ViewModels
 
         public MoviesViewModel()
         {
-            var a = MoviesSystem.Utils.ReadJSON.Read();
+            var a = MoviesSystem.Utils.JSONReader.Read();
             for (int i = 0; i < 5; i++)
             {
                 Movie newMovie = new Movie();
@@ -176,6 +176,25 @@ namespace WpfMovieSystem.ViewModels
             {
                 ShowMessage.ShowError(error.ToString());
             }
+        }
+
+       private ICommand exportDataCommand;
+       public ICommand ExportDataCommand
+        {
+            get
+            {
+                if (this.exportDataCommand == null)
+                {
+                    this.exportDataCommand = new RelayCommand(this.HandleExportDataCommand);
+                }
+                return this.exportDataCommand;
+            }
+        }
+
+        private void HandleExportDataCommand(object parameter)
+        {
+            var writer = new JSONWriter();
+            writer.Write(moviesCollection);
         }
     }
 }
