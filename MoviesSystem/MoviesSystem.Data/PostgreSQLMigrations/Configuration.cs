@@ -1,18 +1,19 @@
-namespace WpfMovieSystem.Migrations
+namespace MoviesSystem.Data.PostgreSQLMigrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WpfMovieSystem.MoviesSystemDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MoviesSystem.Data.PostgreSQLDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"PostgreSQLMigrations";
         }
 
-        protected override void Seed(WpfMovieSystem.MoviesSystemDbContext context)
+        protected override void Seed(MoviesSystem.Data.PostgreSQLDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

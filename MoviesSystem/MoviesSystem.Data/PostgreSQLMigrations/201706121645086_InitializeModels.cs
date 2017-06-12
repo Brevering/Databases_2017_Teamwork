@@ -1,14 +1,14 @@
-namespace WpfMovieSystem.Migrations
+namespace MoviesSystem.Data.PostgreSQLMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class InitializeModels : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Actors",
+                "public.Actors",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -18,7 +18,7 @@ namespace WpfMovieSystem.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Movies",
+                "public.Movies",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -27,22 +27,23 @@ namespace WpfMovieSystem.Migrations
                         Rate_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Descriptions", t => t.Description_Id)
-                .ForeignKey("dbo.Rates", t => t.Rate_Id)
+                .ForeignKey("public.Descriptions", t => t.Description_Id)
+                .ForeignKey("public.Rates", t => t.Rate_Id)
                 .Index(t => t.Description_Id)
                 .Index(t => t.Rate_Id);
             
             CreateTable(
-                "dbo.Descriptions",
+                "public.Descriptions",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Summary = c.String(unicode: false, storeType: "text"),
+                        Summary = c.String(),
+                        Year = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Genres",
+                "public.Genres",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -51,7 +52,7 @@ namespace WpfMovieSystem.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Rates",
+                "public.Rates",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -60,28 +61,28 @@ namespace WpfMovieSystem.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.MovieActors",
+                "public.MovieActors",
                 c => new
                     {
                         Movie_Id = c.Int(nullable: false),
                         Actor_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.Movie_Id, t.Actor_Id })
-                .ForeignKey("dbo.Movies", t => t.Movie_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Actors", t => t.Actor_Id, cascadeDelete: true)
+                .ForeignKey("public.Movies", t => t.Movie_Id, cascadeDelete: true)
+                .ForeignKey("public.Actors", t => t.Actor_Id, cascadeDelete: true)
                 .Index(t => t.Movie_Id)
                 .Index(t => t.Actor_Id);
             
             CreateTable(
-                "dbo.GenreMovies",
+                "public.GenreMovies",
                 c => new
                     {
                         Genre_Id = c.Int(nullable: false),
                         Movie_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.Genre_Id, t.Movie_Id })
-                .ForeignKey("dbo.Genres", t => t.Genre_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Movies", t => t.Movie_Id, cascadeDelete: true)
+                .ForeignKey("public.Genres", t => t.Genre_Id, cascadeDelete: true)
+                .ForeignKey("public.Movies", t => t.Movie_Id, cascadeDelete: true)
                 .Index(t => t.Genre_Id)
                 .Index(t => t.Movie_Id);
             
@@ -89,25 +90,25 @@ namespace WpfMovieSystem.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Movies", "Rate_Id", "dbo.Rates");
-            DropForeignKey("dbo.GenreMovies", "Movie_Id", "dbo.Movies");
-            DropForeignKey("dbo.GenreMovies", "Genre_Id", "dbo.Genres");
-            DropForeignKey("dbo.Movies", "Description_Id", "dbo.Descriptions");
-            DropForeignKey("dbo.MovieActors", "Actor_Id", "dbo.Actors");
-            DropForeignKey("dbo.MovieActors", "Movie_Id", "dbo.Movies");
-            DropIndex("dbo.GenreMovies", new[] { "Movie_Id" });
-            DropIndex("dbo.GenreMovies", new[] { "Genre_Id" });
-            DropIndex("dbo.MovieActors", new[] { "Actor_Id" });
-            DropIndex("dbo.MovieActors", new[] { "Movie_Id" });
-            DropIndex("dbo.Movies", new[] { "Rate_Id" });
-            DropIndex("dbo.Movies", new[] { "Description_Id" });
-            DropTable("dbo.GenreMovies");
-            DropTable("dbo.MovieActors");
-            DropTable("dbo.Rates");
-            DropTable("dbo.Genres");
-            DropTable("dbo.Descriptions");
-            DropTable("dbo.Movies");
-            DropTable("dbo.Actors");
+            DropForeignKey("public.Movies", "Rate_Id", "public.Rates");
+            DropForeignKey("public.GenreMovies", "Movie_Id", "public.Movies");
+            DropForeignKey("public.GenreMovies", "Genre_Id", "public.Genres");
+            DropForeignKey("public.Movies", "Description_Id", "public.Descriptions");
+            DropForeignKey("public.MovieActors", "Actor_Id", "public.Actors");
+            DropForeignKey("public.MovieActors", "Movie_Id", "public.Movies");
+            DropIndex("public.GenreMovies", new[] { "Movie_Id" });
+            DropIndex("public.GenreMovies", new[] { "Genre_Id" });
+            DropIndex("public.MovieActors", new[] { "Actor_Id" });
+            DropIndex("public.MovieActors", new[] { "Movie_Id" });
+            DropIndex("public.Movies", new[] { "Rate_Id" });
+            DropIndex("public.Movies", new[] { "Description_Id" });
+            DropTable("public.GenreMovies");
+            DropTable("public.MovieActors");
+            DropTable("public.Rates");
+            DropTable("public.Genres");
+            DropTable("public.Descriptions");
+            DropTable("public.Movies");
+            DropTable("public.Actors");
         }
     }
 }
