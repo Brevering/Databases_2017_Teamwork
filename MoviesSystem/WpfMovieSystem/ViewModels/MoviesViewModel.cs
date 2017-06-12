@@ -25,21 +25,64 @@ namespace WpfMovieSystem.ViewModels
 
         public MoviesViewModel()
         {
-            var a = MoviesSystem.Utils.JSONReader.Read();
-            for (int i = 0; i < 5; i++)
+            List<HelperClass> jsonResult = MoviesSystem.Utils.JSONReader.Read();
+            if (jsonResult==null)
+            {
+                ShowMessage.ShowError("Reading from json failed!");
+                return;
+            }
+
+            for (int i = 0; i < jsonResult.Count; i++)
             {
                 Movie newMovie = new Movie();
-                newMovie.Title = a[i].title;
+                newMovie.Title = jsonResult[i].title;
                 Description des = new Description();
-                des.Summary = a[i].info.plot;
-                des.Year = a[i].year;
+                
+                des.Year = jsonResult[i].year;
+                if (jsonResult[i].info == null)
+                {
+                    newMovie.Description = des;
+                    continue;
+                }
+
+                des.Summary = jsonResult[i].info.plot;
                 newMovie.Description = des;
+
                 newMovie.Genres = new List<Genre>();
+                if (jsonResult[i].info.genres != null)
+                {
+                    foreach (string genre in jsonResult[i].info.genres)
+                    {
+                        Genre newGenre = new Genre();
+                        newGenre.Name = genre;
+                        newMovie.Genres.Add(newGenre);
+                    }
+                }
+                
                 newMovie.Rate = new Rate()
                 {
-                    RateValue = a[i].info.rating,
-                    Id = i
+                    RateValue = jsonResult[i].info.rating
                 };
+
+                if (jsonResult[i].info.actors != null)
+                {
+                    foreach (string actor in jsonResult[i].info.actors)
+                    {
+                        Actor newActor = new Actor();
+                        int separatorIndex = actor.IndexOf(' ');
+                        if (separatorIndex > 0)
+                        {
+                            newActor.FirstName = actor.Substring(0, separatorIndex);
+                            newActor.LastName = actor.Substring(separatorIndex + 1);
+                        }
+                        else
+                        {
+                            newActor.FirstName = actor;
+                        }
+                        newMovie.Actors.Add(newActor);
+                    }
+                }
+
                 MoviesCollection.Add(newMovie);
             }
         }
@@ -175,6 +218,10 @@ namespace WpfMovieSystem.ViewModels
             if (error.Length > 0)
             {
                 ShowMessage.ShowError(error.ToString());
+            }
+            else
+            {
+                ShowMessage.ShowInfo("Movies saved successfully");
             }
         }
 
