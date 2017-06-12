@@ -69,6 +69,8 @@
     <Compile Include="Behavior\CanExecuteDelegate.cs" />
     <Compile Include="Behavior\ExecuteDelegate.cs" />
     <Compile Include="Behavior\RelayCommand.cs" />
+    <Compile Include="Helpers\GenresToStringConverter.cs" />
+    <Compile Include="Helpers\MoviesToStringConverter.cs" />
     <Compile Include="Helpers\ShowMessage.cs" />
     <Compile Include="Migrations\201706101544196_Initial.cs" />
     <Compile Include="Migrations\201706101544196_Initial.Designer.cs">

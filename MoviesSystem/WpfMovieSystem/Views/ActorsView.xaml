@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfMovieSystem.Views"
+             xmlns:common="clr-namespace:WpfMovieSystem.Helpers"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
@@ -12,6 +13,9 @@
             <i:InvokeCommandAction Command="{Binding LoadActorsFromDbCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <common:MoviesToStringConverter x:Key="moviesConverter"/>
+    </UserControl.Resources>
     <Grid Background="White">
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Width="400" VerticalAlignment="Top"
                   Margin="10 20" AutoGenerateColumns="False"
@@ -56,7 +60,7 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Movies, Mode=OneWay}" 
+                            <TextBlock Text="{Binding Movies, Mode=OneWay, Converter={StaticResource moviesConverter}}" 
                                     VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

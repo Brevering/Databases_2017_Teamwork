@@ -23,6 +23,9 @@ namespace WpfMovieSystem.ViewModels
             }
         }
 
+        private static bool isSavingToDb = false;
+        private static Object _lock = new Object();
+
         public MoviesViewModel()
         {
             List<HelperClass> jsonResult = MoviesSystem.Utils.JSONReader.Read();
@@ -47,8 +50,7 @@ namespace WpfMovieSystem.ViewModels
 
                 des.Summary = jsonResult[i].info.plot;
                 newMovie.Description = des;
-
-                newMovie.Genres = new List<Genre>();
+                
                 if (jsonResult[i].info.genres != null)
                 {
                     foreach (string genre in jsonResult[i].info.genres)
@@ -174,55 +176,75 @@ namespace WpfMovieSystem.ViewModels
             {
                 if (this.saveToDbCommand == null)
                 {
-                    this.saveToDbCommand = new RelayCommand(this.HandleSaveToDbCommand);
+                    this.saveToDbCommand = new RelayCommand(this.HandleSaveToDbCommand,CanSaveToDb);
                 }
                 return this.saveToDbCommand;
             }
         }
 
-        public void HandleSaveToDbCommand(object parameter)
+        private bool CanSaveToDb(object parameter)
         {
-            StringBuilder error = new StringBuilder();
-            foreach (Movie movie in MoviesCollection)
+            return !isSavingToDb;
+        }
+
+        public async void HandleSaveToDbCommand(object parameter)
+        {
+            lock (_lock)
             {
-                try
+                if (isSavingToDb)
                 {
-                    using (MoviesSystemDbContext context = new MoviesSystemDbContext())
+                    return;
+                }
+
+                isSavingToDb = true;
+            }
+
+            await Task.Run(() =>
+            {
+                StringBuilder error = new StringBuilder();
+                foreach (Movie movie in MoviesCollection)
+                {
+                    try
                     {
-                        var dbMovies = context.Movies;
-
-                        Movie dbMovie = dbMovies.Where(
-                        m => m.Title == movie.Title && m.Description.Year==movie.Description.Year)
-                        .FirstOrDefault();
-                        if (dbMovie == null)
+                        using (MoviesSystemDbContext context = new MoviesSystemDbContext())
                         {
-                            dbMovies.Add(movie);
-                        }
-                        else
-                        {
-                            dbMovie.Actors = movie.Actors;
-                            dbMovie.Description = movie.Description;
-                            dbMovie.Genres = movie.Genres;
-                            dbMovie.Rate = dbMovie.Rate;
-                        }
+                            var dbMovies = context.Movies;
 
-                        context.SaveChanges();
+                            Movie dbMovie = dbMovies.Where(
+                            m => m.Title == movie.Title && m.Description.Year == movie.Description.Year)
+                            .FirstOrDefault();
+                            if (dbMovie == null)
+                            {
+                                dbMovies.Add(movie);
+                            }
+                            else
+                            {
+                                dbMovie.Actors = movie.Actors;
+                                dbMovie.Description = movie.Description;
+                                dbMovie.Genres = movie.Genres;
+                                dbMovie.Rate = dbMovie.Rate;
+                            }
+
+                            context.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        error.AppendFormat("{0} was not uploaded due to err:{1}{2}", movie.Title, ex.Message, Environment.NewLine);
                     }
                 }
-                catch (Exception ex)
-                {
-                    error.AppendFormat("{0} was not uploaded due to err:{1}{2}", movie.Title, ex.Message, Environment.NewLine);
-                }                         
-            }
 
-            if (error.Length > 0)
-            {
-                ShowMessage.ShowError(error.ToString());
-            }
-            else
-            {
-                ShowMessage.ShowInfo("Movies saved successfully");
-            }
+                if (error.Length > 0)
+                {
+                    ShowMessage.ShowError(error.ToString());
+                }
+                else
+                {
+                    ShowMessage.ShowInfo("Movies saved successfully");
+                }
+            });
+
+            isSavingToDb = false;
         }
 
        private ICommand exportDataCommand;
