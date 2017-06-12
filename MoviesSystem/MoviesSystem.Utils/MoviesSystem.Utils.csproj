@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,15 +47,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HelperClass.cs" />
-    <Compile Include="JSONWriter.cs" />
+    <Compile Include="PDFWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JSONReader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MoviesSystem.Data\MoviesSystem.Data.csproj">
+      <Project>{88c044e1-b034-4879-b0b1-cb747b957c63}</Project>
+      <Name>MoviesSystem.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MoviesSystem.Models\MoviesSystem.Models.csproj">
       <Project>{e0cf94be-f765-45d9-ab2e-88f9e623d182}</Project>
       <Name>MoviesSystem.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

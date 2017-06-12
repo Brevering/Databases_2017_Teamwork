@@ -85,7 +85,6 @@
       <DependentUpon>201706101635504_Year type to be int.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="MoviesSystemDbContext.cs" />
     <Compile Include="ViewModels\ActorsViewModel.cs" />
     <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\MoviesViewModel.cs" />
@@ -169,6 +168,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MoviesSystem.Data\MoviesSystem.Data.csproj">
+      <Project>{88C044E1-B034-4879-B0B1-CB747B957C63}</Project>
+      <Name>MoviesSystem.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MoviesSystem.Models\MoviesSystem.Models.csproj">
       <Project>{e0cf94be-f765-45d9-ab2e-88f9e623d182}</Project>
       <Name>MoviesSystem.Models</Name>

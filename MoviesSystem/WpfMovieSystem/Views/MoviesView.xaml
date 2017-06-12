@@ -8,11 +8,11 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadFromDbCommand}" />
         </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers>-->
     <UserControl.Resources>
         <common:GenresToStringConverter x:Key="genresConverter"/>
     </UserControl.Resources>
@@ -80,8 +80,11 @@
         </DataGrid>
         <StackPanel Margin="20" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
             <Button Height="30"  Margin="0 0 20 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                Command="{Binding LoadFromDbCommand}"
+                Content="Load Database"/>
+            <Button Height="30"  Margin="0 0 20 0" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Command="{Binding SaveToDbCommand}"
-                Content="Save in Database"/>
+                Content="Save to Database"/>
             <Button Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Command="{Binding ExportDataCommand}"
                 Content="Export data"/>

@@ -35,7 +35,7 @@ namespace WpfMovieSystem.ViewModels
                 return;
             }
 
-            for (int i = 0; i < jsonResult.Count; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Movie newMovie = new Movie();
                 newMovie.Title = jsonResult[i].title;
@@ -262,7 +262,7 @@ namespace WpfMovieSystem.ViewModels
 
         private void HandleExportDataCommand(object parameter)
         {
-            var writer = new JSONWriter();
+            var writer = new PDFWriter();
             writer.Write(moviesCollection);
         }
     }
